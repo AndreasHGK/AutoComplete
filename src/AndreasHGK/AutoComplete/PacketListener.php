@@ -18,7 +18,6 @@ class PacketListener implements Listener {
             \Closure::bind(function () use($key, $packet) {
                 $this->packets[$key] = $packet;
             }, $ev, DataPacketSendEvent::class)();
-            var_dump($packet);
         }
     }
 
