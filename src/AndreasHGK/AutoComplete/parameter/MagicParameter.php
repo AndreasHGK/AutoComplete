@@ -6,8 +6,8 @@ namespace AndreasHGK\AutoComplete\parameter;
 
 use AndreasHGK\AutoComplete\AutoComplete;
 use pocketmine\network\mcpe\protocol\AvailableCommandsPacket;
-use pocketmine\network\mcpe\protocol\types\command\CommandEnum;
-use pocketmine\network\mcpe\protocol\types\command\CommandParameter;
+use pocketmine\network\mcpe\protocol\types\CommandEnum;
+use pocketmine\network\mcpe\protocol\types\CommandParameter;
 
 /**
  * Class MagicParameter

@@ -11,15 +11,13 @@ use pocketmine\network\mcpe\protocol\AvailableCommandsPacket;
 class PacketListener implements Listener {
 
     public function onPacketSend(DataPacketSendEvent $ev) : void {
-        $packets = $ev->getPackets();
-        foreach($packets as $key => $packet){
-            if(!$packet instanceof AvailableCommandsPacket) continue;
-            AutoComplete::getInstance()->updatePacketFor($ev->getTargets()[0]->getPlayer(), $packet);
-            \Closure::bind(function () use($key, $packet) {
-                $this->packets[$key] = $packet;
-            }, $ev, DataPacketSendEvent::class)();
-            var_dump($packet);
-        }
+        $packet = $ev->getPacket();
+        if(!$packet instanceof AvailableCommandsPacket) return;
+        AutoComplete::getInstance()->updatePacketFor($ev->getPlayer(), $packet);
+        \Closure::bind(function () use($packet) {
+            $this->packet = $packet;
+        }, $ev, DataPacketSendEvent::class)();
+        var_dump($packet);
     }
 
 }

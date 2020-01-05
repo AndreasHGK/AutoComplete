@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace AndreasHGK\AutoComplete\parameter;
 
 use pocketmine\network\mcpe\protocol\AvailableCommandsPacket;
-use pocketmine\network\mcpe\protocol\types\command\CommandParameter;
+use pocketmine\network\mcpe\protocol\types\CommandParameter;
 
 class CustomCommandParameter {
 

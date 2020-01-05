@@ -1,6 +1,7 @@
 --- # Poggit-CI Manifest. Open the CI at https://poggit.pmmp.io/ci/AndreasHGK/AutoComplete
 branches:
 - 4.0.0
+- master
 projects:
   AutoComplete:
     path: ""

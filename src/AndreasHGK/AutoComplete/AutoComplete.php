@@ -6,9 +6,9 @@ namespace AndreasHGK\AutoComplete;
 
 use AndreasHGK\AutoComplete\parameter\ArrayParameter;
 use pocketmine\network\mcpe\protocol\AvailableCommandsPacket;
-use pocketmine\network\mcpe\protocol\types\command\CommandData;
-use pocketmine\network\mcpe\protocol\types\command\CommandEnum;
-use pocketmine\player\Player;
+use pocketmine\network\mcpe\protocol\types\CommandData;
+use pocketmine\network\mcpe\protocol\types\CommandEnum;
+use pocketmine\Player;
 use pocketmine\plugin\PluginBase;
 
 /**
@@ -72,9 +72,16 @@ class AutoComplete {
                     //work around a client bug which makes the original name not show when aliases are used
                     $aliases[] = $name;
                 }
-                $aliasObj = new CommandEnum(ucfirst($command->getName()) . "Aliases", $aliases);
+                $aliasObj = new CommandEnum();
+                $aliasObj->enumName = ucfirst($command->getName()) . "Aliases";
+                $aliasObj->enumValues = $aliases;
             }
-            $commandData = new CommandData($name, $command->getDescription(), ($customCommandData->isDebugCommand() ? 1 : 0), (int)$command->testPermissionSilent($player), $aliasObj, []);
+            $commandData = new CommandData();
+            $commandData->commandName = $name;
+            $commandData->commandDescription = $command->getDescription();
+            $commandData->flags = (int)$customCommandData->isDebugCommand();
+            $commandData->permission = (int)$command->testPermissionSilent($player);
+            $commandData->aliases = $aliasObj;
 
             foreach($customCommandData->getParameters() as $x => $paramMap){
                 if(!$player->hasPermission($paramMap->getPermission()) && $paramMap->getPermission() !== "") continue;
