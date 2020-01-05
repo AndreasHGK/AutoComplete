@@ -53,7 +53,7 @@ class ArrayParameter extends MagicParameter {
     public function toPMParameter(): CommandParameter
     {
         $param = parent::toPMParameter();
-        $param->enum = new CommandEnum($this->getTypeName(), $this->getContents());
+        $param->enum->enumValues = $this->getContents();
         return $param;
     }
 

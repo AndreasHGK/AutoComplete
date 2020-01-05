@@ -35,6 +35,7 @@ class CustomCommandParameter {
     //magic types
     public const MAGIC_TYPE_ITEM = "Item";
     public const MAGIC_TYPE_BLOCK = "Block";
+    public const MAGIC_TYPE_ENCHANT = "Enchant";
 
     /** @var string */
     protected $name;
