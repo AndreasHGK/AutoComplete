@@ -5,9 +5,6 @@ declare(strict_types=1);
 namespace AndreasHGK\AutoComplete;
 
 use AndreasHGK\AutoComplete\parameter\ArrayParameter;
-use AndreasHGK\AutoComplete\parameter\CustomCommandParameter;
-use AndreasHGK\AutoComplete\parameter\MagicParameter;
-use AndreasHGK\AutoComplete\parameter\SingleParameter;
 use pocketmine\network\mcpe\protocol\AvailableCommandsPacket;
 use pocketmine\network\mcpe\protocol\types\command\CommandData;
 use pocketmine\network\mcpe\protocol\types\command\CommandEnum;
@@ -64,11 +61,12 @@ class AutoComplete {
     public function updatePacketFor(Player $player, AvailableCommandsPacket &$packet) : AvailableCommandsPacket {
         foreach(self::getCommandMap()->getAll() as $id => $customCommandData){
             if(!$customCommandData->getCommand()->testPermissionSilent($player)) continue;
+
             $command = $customCommandData->getCommand();
             $name = strtolower($command->getName());
-
             $aliases = $command->getAliases();
             $aliasObj = null;
+
             if(!empty($aliases)){
                 if(!in_array($name, $aliases, true)){
                     //work around a client bug which makes the original name not show when aliases are used
@@ -76,12 +74,15 @@ class AutoComplete {
                 }
                 $aliasObj = new CommandEnum(ucfirst($command->getName()) . "Aliases", $aliases);
             }
-            $commandData = new CommandData($name, $command->getDescription(), 0, 0, $aliasObj, []);
+            $commandData = new CommandData($name, $command->getDescription(), ($customCommandData->isDebugCommand() ? 1 : 0), (int)$command->testPermissionSilent($player), $aliasObj, []);
 
             foreach($customCommandData->getParameters() as $x => $paramMap){
                 if(!$player->hasPermission($paramMap->getPermission()) && $paramMap->getPermission() !== "") continue;
+
                 foreach($paramMap->getParameters() as $y => $customParameter){
-                    $vanillaParam = $customParameter->toPMParamater();
+
+                    $vanillaParam = $customParameter->toPMParameter();
+
                     if(isset($vanillaParam->enum)){
                         if($customParameter instanceof ArrayParameter && $customParameter->isSoftEnum()){
                             array_push($packet->softEnums, $vanillaParam->enum);
@@ -89,11 +90,12 @@ class AutoComplete {
                             array_push($packet->hardcodedEnums, $vanillaParam->enum);
                         }
                     }
+
                     $commandData->overloads[$x][$y] = $vanillaParam;
                 }
             }
 
-            $packet->commandData[$name] = $commandData;
+            $packet->commandData[$command->getName()] = $commandData;
         }
         return $packet;
     }

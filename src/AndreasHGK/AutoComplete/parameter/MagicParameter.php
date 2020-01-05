@@ -38,9 +38,9 @@ class MagicParameter extends CustomCommandParameter {
     /**
      * @return CommandParameter
      */
-    public function toPMParamater(): CommandParameter
+    public function toPMParameter(): CommandParameter
     {
-        $param = parent::toPMParamater();
+        $param = parent::toPMParameter();
         $param->paramType = AvailableCommandsPacket::ARG_FLAG_ENUM | AvailableCommandsPacket::ARG_FLAG_VALID | AutoComplete::$enumIndex;
         AutoComplete::$enumIndex++;
         $param->enum = new CommandEnum($this->getTypeName(), []);

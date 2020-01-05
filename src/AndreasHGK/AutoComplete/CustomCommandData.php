@@ -18,6 +18,9 @@ class CustomCommandData {
     /** @var array|ParameterMap[] */
     protected $parameters = [];
 
+    /** @var bool */
+    protected $debugCommand = false;
+
     /**
      * @return string
      */
@@ -30,6 +33,22 @@ class CustomCommandData {
      */
     public function getCommand() : Command {
         return $this->command;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isDebugCommand() : bool {
+        return $this->debugCommand;
+    }
+
+    /**
+     * this will make the command blue in the player's command list
+     *
+     * @param bool $debug
+     */
+    public function setDebugCommand(bool $debug = true) : void {
+        $this->debugCommand = $debug;
     }
 
     /**
@@ -153,7 +172,7 @@ class CustomCommandData {
      * @param int $x
      * @param ParameterMap $map
      */
-    public function setParamaterMap(int $x, ParameterMap $map) : void {
+    public function setParameterMap(int $x, ParameterMap $map) : void {
         $this->parameters[$x] = $map;
     }
 

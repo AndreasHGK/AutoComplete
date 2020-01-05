@@ -90,7 +90,7 @@ class CustomCommandParameter {
     /**
      * @return CommandParameter
      */
-    public function toPMParamater() : CommandParameter {
+    public function toPMParameter() : CommandParameter {
         $param = new CommandParameter();
         $param->paramName = $this->getName();
         $param->isOptional = $this->isOptional();
