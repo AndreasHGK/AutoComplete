@@ -137,13 +137,8 @@ class CustomCommandData {
      * @param CustomCommandParameter $param
      */
     public function setParameter(int $x, int $y, CustomCommandParameter $param) : void {
-<<<<<<< Updated upstream
-        if(!isset($this->parameters[$x])) $this->parameters[$x] = new ParameterMap($this);
-        $this->parameters[$x][$y] = $param;
-=======
         if(!isset($this->parameters[$x])) $this->parameters[$x] = new ParameterMap();
         $this->parameters[$x]->setParameter($y, $param);
->>>>>>> Stashed changes
     }
 
     /**
